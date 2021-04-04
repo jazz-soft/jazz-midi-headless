@@ -1,0 +1,25 @@
+{
+  "name": "jazz-midi-headless",
+  "version": "0.0.0",
+  "description": "coming soon",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jzz",
+    "midi",
+    "headless"
+  ],
+  "author": "jazz-soft (https://jazz-soft.net/)",
+  "dependencies": {
+    "jzz": "^1.2.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jazz-soft/jazz-midi-headless.git"
+  },
+  "homepage": "https://github.com/jazz-soft/jazz-midi-headless#readme",
+  "bugs": "https://github.com/jazz-soft/jazz-midi-headless/issues",
+  "license": "MIT"
+}
