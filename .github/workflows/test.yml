@@ -1,0 +1,6 @@
+on: [push]
+jobs:
+  it-works:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "it works!"
