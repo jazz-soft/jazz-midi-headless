@@ -1,6 +1,6 @@
 {
   "name": "jazz-midi-headless",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "coming soon",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   ],
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^1.2.7"
+    "jzz": "^1.2.8"
   },
   "repository": {
     "type": "git",

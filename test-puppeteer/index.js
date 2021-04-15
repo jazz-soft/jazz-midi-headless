@@ -11,6 +11,6 @@ function timeout(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
   page.on('console', msg => console.log('>>', msg.text()));
   await jmh.setup(page);
   await page.goto(url);
-  await timeout(200);
+  await timeout(5000);
   await browser.close();
 })();

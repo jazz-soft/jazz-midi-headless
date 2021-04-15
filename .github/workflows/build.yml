@@ -1,6 +1,7 @@
-on: [push]
+name: build
+on: [push, pull_request]
 jobs:
-  it-works:
+  build:
     runs-on: ubuntu-latest
     steps:
       - run: echo "it works!"
