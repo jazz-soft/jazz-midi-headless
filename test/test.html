@@ -4,7 +4,6 @@
 <title>MIDI Test</title>
 <script src="../node_modules/jzz/javascript/JZZ.js"></script>
 </head>
-
 <body>
 <script>
 JZZ().or('Cannot start JZZ!').and(function() {
@@ -12,25 +11,25 @@ JZZ().or('Cannot start JZZ!').and(function() {
   var info = this.info();
   var inputs = info.inputs;
   var outputs = info.outputs;
-  console.log(inputs, outputs);
+  if (!outputs.length) console.log('No MIDI-Out ports found!');
   for (i = 0; i < outputs.length; i++) testMidiOut(outputs[i].name);
+  if (!inputs.length) console.log('No MIDI-In ports found!');
   for (i = 0; i < inputs.length; i++) testMidiIn(inputs[i].name);
 });
 function testMidiOut(name) {
-  JZZ().openMidiOut(name).or(function() { console.log('Cannoy open MIDI Out:', name); }).and(function() {
-    console.log('Testing MIDI Out:', name);
+  JZZ().openMidiOut(name).or(function() { console.log('Cannoy open MIDI-Out:', name); }).and(function() {
+    console.log('Testing MIDI-Out:', name);
     this.noteOn(0, 'C6', 127);
   });
 }
 function testMidiIn(name) {
-  JZZ().openMidiIn(name).or(function() { console.log('Cannoy open MIDI In:', name); }).and(function() {
-    console.log('Testing MIDI In:', name);
+  JZZ().openMidiIn(name).or(function() { console.log('Cannoy open MIDI-In:', name); }).and(function() {
+    console.log('Testing MIDI-In:', name);
     this.connect(function(msg) {
       console.log(name, 'received:', msg.toString());
     });
   });
 }
 </script>
-
 </body>
 </html>
