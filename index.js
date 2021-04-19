@@ -12,6 +12,7 @@ module.exports = function(JZZ) {
   async function setup_puppeteer(page) {
     var ins = [];
     var outs = [];
+    var count = 0;
     page.on('load', () => { reset(ins, outs); });
     async function sendData(data) {
       await page.evaluate((s) => {
@@ -29,17 +30,45 @@ module.exports = function(JZZ) {
         sendData(data);
         return;
       }
+      if (request == 'new') {
+        count++;
+        sendData(['version', count, 0]);
+        return;
+      }
       var idx = req[1];
       req = req.slice(2);
       if (request == 'play') {
         if (outs[idx]) outs[idx].send(req);
         return;
       }
-      if (request == 'openout') {
-        var port = await JZZ().openMidiOut(req[2]);
-        outs[idx] = port;
-        sendData([request, idx, req[0]]);
+      if (request == 'openin') {
+        var port = await JZZ().openMidiIn(req[0]).or(function() {
+          sendData([request, idx, ins[idx] ? ins[idx].name() : undefined]);
+        }).and(function() {
+          if (ins[idx]) ins[idx].close();
+          ins[idx] = this;
+          this.connect(function(msg) {
+            sendData(['midi', idx, 0].concat(msg.slice()));
+          });
+          sendData([request, idx, req[0]]);
+        });
         return;
+      }
+      if (request == 'openout') {
+        var port = await JZZ().openMidiOut(req[0]).or(function() {
+          sendData([request, idx, outs[idx] ? outs[idx].name() : undefined]);
+        }).and(function() {
+          if (outs[idx]) outs[idx].close();
+          outs[idx] = this;
+          sendData([request, idx, req[0]]);
+        });
+        return;
+      }
+      if (request == 'closein') {
+        if (ins[idx]) {
+          ins[idx].close();
+          ins[idx] = undefined;
+        }
       }
       if (request == 'closeout') {
         if (outs[idx]) {
@@ -47,7 +76,7 @@ module.exports = function(JZZ) {
           outs[idx] = undefined;
         }
       }
-      console.log('request:', request, idx, req);
+      //console.log('request:', request, idx, req);
     }
     await page.exposeFunction('jazz_midi_headless_request', onRequest);
     await page.evaluateOnNewDocument(() => {

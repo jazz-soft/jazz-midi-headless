@@ -17,13 +17,13 @@ JZZ().or('Cannot start JZZ!').and(function() {
   for (i = 0; i < inputs.length; i++) testMidiIn(inputs[i].name);
 });
 function testMidiOut(name) {
-  JZZ().openMidiOut(name).or(function() { console.log('Cannoy open MIDI-Out:', name); }).and(function() {
+  JZZ().openMidiOut(name).or(function() { console.log('Cannot open MIDI-Out:', name); }).and(function() {
     console.log('Testing MIDI-Out:', name);
     this.noteOn(0, 'C6', 127);
   });
 }
 function testMidiIn(name) {
-  JZZ().openMidiIn(name).or(function() { console.log('Cannoy open MIDI-In:', name); }).and(function() {
+  JZZ().openMidiIn(name).or(function() { console.log('Cannot open MIDI-In:', name); }).and(function() {
     console.log('Testing MIDI-In:', name);
     this.connect(function(msg) {
       console.log(name, 'received:', msg.toString());
