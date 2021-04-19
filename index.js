@@ -16,15 +16,15 @@ module.exports = function(JZZ) {
     page.on('load', () => { reset(ins, outs); });
     async function sendData(data) {
       await page.evaluate((s) => {
-        jazz_midi_headless_write(s);
+        window.jazz_midi_headless_write(s);
       }, JSON.stringify(data));
     }
-    async function onRequest(req) {
+    async function jazz_midi_headless_request(req) {
       var i, data;
       var request = req[0];
       if (request == 'refresh') {
         var info = await JZZ().refresh().info();
-        var data = ['refresh', { ins: [], outs: [] }];
+        data = ['refresh', { ins: [], outs: [] }];
         for (i = 0; i < info.inputs.length; i++) data[1].ins.push({ name: info.inputs[i].name });
         for (i = 0; i < info.outputs.length; i++) data[1].outs.push({ name: info.outputs[i].name });
         sendData(data);
@@ -42,7 +42,7 @@ module.exports = function(JZZ) {
         return;
       }
       if (request == 'openin') {
-        var port = await JZZ().openMidiIn(req[0]).or(function() {
+        await JZZ().openMidiIn(req[0]).or(function() {
           sendData([request, idx, ins[idx] ? ins[idx].name() : undefined]);
         }).and(function() {
           if (ins[idx]) ins[idx].close();
@@ -55,7 +55,7 @@ module.exports = function(JZZ) {
         return;
       }
       if (request == 'openout') {
-        var port = await JZZ().openMidiOut(req[0]).or(function() {
+        await JZZ().openMidiOut(req[0]).or(function() {
           sendData([request, idx, outs[idx] ? outs[idx].name() : undefined]);
         }).and(function() {
           if (outs[idx]) outs[idx].close();
@@ -78,7 +78,7 @@ module.exports = function(JZZ) {
       }
       //console.log('request:', request, idx, req);
     }
-    await page.exposeFunction('jazz_midi_headless_request', onRequest);
+    await page.exposeFunction('jazz_midi_headless_request', jazz_midi_headless_request);
     await page.evaluateOnNewDocument(() => {
       var jazz_midi_headless_data;
       window.jazz_midi_headless_write = function(s) {
@@ -91,7 +91,7 @@ module.exports = function(JZZ) {
         jazz_midi_headless_data.id = 'jazz-midi-msg';
         document.body.appendChild(jazz_midi_headless_data);
         document.addEventListener('jazz-midi', (evt) => { jazz_midi_headless_request(evt.detail); });
-        jazz_midi_headless_write('["version",0,0]');
+        window.jazz_midi_headless_write('["version",0,0]');
       }
       document.addEventListener('jazz-midi', jazz_midi_headless_init);
     });

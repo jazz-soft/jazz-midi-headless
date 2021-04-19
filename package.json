@@ -1,10 +1,11 @@
 {
   "name": "jazz-midi-headless",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "coming soon",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint . test",
+    "test": "node test/test"
   },
   "keywords": [
     "midi",
@@ -16,6 +17,7 @@
     "jzz": "^1.2.9"
   },
   "devDependencies": {
+    "eslint": "^7.24.0",
     "jzz-gui-player": "^1.4.8",
     "jzz-midi-smf": "^1.5.0",
     "puppeteer": "^8.0.0",
