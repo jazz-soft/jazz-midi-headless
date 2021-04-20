@@ -15,9 +15,12 @@ module.exports = function(JZZ) {
     var count = 0;
     page.on('load', () => { reset(ins, outs); });
     async function sendData(data) {
-      await page.evaluate((s) => {
-        window.jazz_midi_headless_write(s);
-      }, JSON.stringify(data));
+      try {
+        await page.evaluate((s) => {
+          window.jazz_midi_headless_write(s);
+        }, JSON.stringify(data));
+      }
+      catch(e) {/**/}
     }
     async function jazz_midi_headless_request(req) {
       var i, data;
