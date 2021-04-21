@@ -30,7 +30,7 @@ midiin_c.busy = true;
   page.on('console', msg => {
     console.log('>>', msg.text());
   });
-  await JMH.setup(page);
+  await JMH.enable(page);
   await page.goto(url);
   await page.waitForTimeout(1000);
   midiin_a.emit([0x9a, 0xa, 0xa]);

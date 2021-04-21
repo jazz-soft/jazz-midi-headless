@@ -9,7 +9,7 @@ module.exports = function(JZZ) {
     outs = [];
   }
 
-  async function setup_puppeteer(page) {
+  async function enable_puppeteer(page) {
     var ins = [];
     var outs = [];
     var count = 0;
@@ -100,6 +100,6 @@ module.exports = function(JZZ) {
     });
   }
   return {
-    setup: setup_puppeteer
+    enable: enable_puppeteer
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "jazz-midi-headless",
-  "version": "0.0.3",
-  "description": "Headless MIDI",
+  "version": "0.0.4",
+  "description": "MIDI for headless testing",
   "main": "index.js",
   "scripts": {
     "lint": "eslint . test",

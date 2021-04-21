@@ -1,5 +1,5 @@
 const JZZ = require('jzz');
-const jmh = require('..')(JZZ);
+const JMH = require('..')(JZZ);
 const puppeteer = require('puppeteer');
 const url = 'file://' + __dirname + '/player.html';
 
@@ -10,6 +10,6 @@ const url = 'file://' + __dirname + '/player.html';
     console.log('>>', msg.text());
     if (msg.text() == 'Done!') browser.close();
   });
-  await jmh.setup(page);
+  await JMH.enable(page);
   await page.goto(url);
 })();
