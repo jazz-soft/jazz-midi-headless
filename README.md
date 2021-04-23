@@ -40,3 +40,50 @@ const inject_jzz = require('fs').readFileSync(__dirname + '/node_modules/jzz/jav
   // ...
 })();
 ```
+
+## Virtual ports
+
+Normally, **jazz-midi-headless** sees all regular MIDI ports available on your system
+via **JZZ** and **jazz-midi**.  
+You can create virtual MIDI ports and (optionally) hide the regular ones.
+
+### Using JZZ virtual ports:
+
+```js
+const JZZ = require('jzz');
+const JMH = require('jazz-midi-headless')(JZZ);
+
+const virtual_midi_out = new JZZ.Widget();
+JZZ.addMidiOut('VIRTUAL MIDI-Out', virtual_midi_out);
+virtual_midi_out.connect(function(msg) { console.log('MIDI received: ' + msg); });
+
+const virtual_midi_in = new JZZ.Widget();
+JZZ.addMidiIn('VIRTUAL MIDI-In', virtual_midi_in);
+
+JZZ({ engine: 'none' });
+// ...
+virtual_midi_in.noteOn(0, 'C#5', 127);
+// ...
+```
+
+### Using web-midi-test virtual ports:
+
+```js
+const JZZ = require('jzz');
+const JMH = require('jazz-midi-headless')(JZZ);
+const WMT = require('web-midi-test');
+
+const virtual_midi_out = new WMT.MidiDst('VIRTUAL MIDI-Out');
+virtual_midi_out.connect();
+virtual_midi_out.receive = function(msg) { console.log('MIDI received:', msg); };
+
+const virtual_midi_in = new WMT.MidiSrc('VIRTUAL MIDI-In');
+virtual_midi_in.connect();
+
+global.navigator = WMT;
+
+JZZ({ engine: 'webmidi' });
+// ...
+virtual_midi_in.emit([0x90, 0x61, 0x7f]);
+// ...
+```
