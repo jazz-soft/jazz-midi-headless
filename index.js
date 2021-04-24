@@ -1,5 +1,6 @@
 module.exports = function(JZZ) {
   if (!JZZ) JZZ = require('jzz');
+  const jzz_inject = require('fs').readFileSync(require.resolve('jzz'), 'utf8');
 
   function reset(ins, outs) {
     var i;
@@ -9,7 +10,7 @@ module.exports = function(JZZ) {
     outs = [];
   }
 
-  async function enable_puppeteer(page) {
+  async function enable_puppeteer(page, inject = true) {
     var ins = [];
     var outs = [];
     var count = 0;
@@ -98,6 +99,10 @@ module.exports = function(JZZ) {
       }
       document.addEventListener('jazz-midi', jazz_midi_headless_init);
     });
+    if (inject) {
+      await page.evaluateOnNewDocument(jzz_inject);
+      await page.evaluateOnNewDocument('navigator.requestMIDIAccess = JZZ.requestMIDIAccess;');
+    }
   }
   return {
     enable: enable_puppeteer
