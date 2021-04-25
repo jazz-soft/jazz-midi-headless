@@ -24,7 +24,7 @@ const puppeteer = require('puppeteer');
 ## Virtual ports
 
 Normally, **jazz-midi-headless** sees all regular MIDI ports available on your system
-via **JZZ** and **jazz-midi**.  
+via the **JZZ** and **jazz-midi**.  
 You can create virtual MIDI ports and (optionally) hide the regular ones.
 
 ### Using JZZ virtual ports:
