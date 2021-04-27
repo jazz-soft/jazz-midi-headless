@@ -16,7 +16,7 @@ midiout_a.connect(function(msg) { console.log('VIRTUAL MIDI-Out A received: ' + 
 midiout_b.connect(function(msg) { console.log('VIRTUAL MIDI-Out B received: ' + msg); });
 
 (async () => {
-  await JZZ({ engine: 'webmidi' });
+  await JZZ({ engine: 'none' });
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   page.on('console', msg => {
@@ -27,6 +27,6 @@ midiout_b.connect(function(msg) { console.log('VIRTUAL MIDI-Out B received: ' + 
   await page.waitForTimeout(200);
   midiin_a.noteOn(0, 'C5', 127);
   midiin_b.noteOn(0, 'C6', 127);
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(5000);
   await browser.close();
 })();
