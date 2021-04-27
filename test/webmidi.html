@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+<title>Web MIDI test</title>
+</head>
+<body>
+<script>
+function success(webmidi) {
+  console.log('Web MIDI is working!');
+  if (webmidi.outputs.size) {
+    webmidi.outputs.forEach(function(port) {
+      console.log('Testing:', port.name);
+      port.send([0x80, 0x40, 0x00]);
+    });
+  }
+  else {
+    console.log('No MIDI-Out ports');
+  }
+  if (webmidi.inputs.size) {
+    webmidi.inputs.forEach(function(port) {
+      port.onmidimessage = function(msg) { console.log(port.name, 'received:', msg.data.toString()); }
+      console.log('Testing:', port.name);
+    });
+  }
+  else {
+    console.log('No MIDI-In ports');
+  }
+}
+function fail(err) { console.log('Cannot start Web MIDI'); }
+navigator.requestMIDIAccess().then(success, fail);
+</script>
+</body>
+</html>
