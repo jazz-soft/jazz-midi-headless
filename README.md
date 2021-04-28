@@ -21,6 +21,25 @@ const puppeteer = require('puppeteer');
 })();
 ```
 
+## Playwright
+
+```js
+const JZZ = require('jzz');
+const JMH = require('jazz-midi-headless')(JZZ);
+const playwright = require('playwright');
+
+(async () => {
+  for (const browserType of ['chromium', 'firefox', 'webkit']) {
+    const browser = await playwright[browserType].launch();
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    await JMH.enable(page);
+    await page.goto(url);
+    // ...
+  }
+})();
+```
+
 ## Virtual ports
 
 Normally, **jazz-midi-headless** sees all regular MIDI ports available on your system

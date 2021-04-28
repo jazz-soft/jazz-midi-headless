@@ -11,6 +11,18 @@ module.exports = function(JZZ) {
   }
 
   async function enable_puppeteer(page, inject = true) {
+    var init_script;
+    if (typeof page.evaluateOnNewDocument == 'function') {
+      init_script = async function(page, code) {
+        return page.evaluateOnNewDocument(code);
+      }
+    }
+    else if (typeof page.addInitScript == 'function') {
+      init_script = async function(page, code) {
+        return page.addInitScript(code);
+      }
+    }
+
     var ins = [];
     var outs = [];
     var count = 0;
@@ -83,7 +95,7 @@ module.exports = function(JZZ) {
       //console.log('request:', request, idx, req);
     }
     await page.exposeFunction('jazz_midi_headless_request', jazz_midi_headless_request);
-    await page.evaluateOnNewDocument(() => {
+    await init_script(page, () => {
       var jazz_midi_headless_data;
       window.jazz_midi_headless_write = function(s) {
         jazz_midi_headless_data.innerText += s + '\n';
@@ -100,8 +112,8 @@ module.exports = function(JZZ) {
       document.addEventListener('jazz-midi', jazz_midi_headless_init);
     });
     if (inject) {
-      await page.evaluateOnNewDocument(jzz_inject);
-      await page.evaluateOnNewDocument('navigator.requestMIDIAccess = JZZ.requestMIDIAccess;');
+      await init_script(page, jzz_inject);
+      await init_script(page, 'navigator.requestMIDIAccess = JZZ.requestMIDIAccess;');
     }
   }
   return {
