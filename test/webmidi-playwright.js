@@ -1,6 +1,6 @@
 const JZZ = require('jzz');
 const JMH = require('..')(JZZ);
-const puppeteer = require('puppeteer');
+const playwright = require('playwright');
 const url = 'file://' + __dirname + '/webmidi.html';
 
 const midiout_a = new JZZ.Widget();
@@ -17,16 +17,21 @@ midiout_b.connect(function(msg) { console.log('VIRTUAL MIDI-Out B received: ' + 
 
 (async () => {
   await JZZ({ engine: 'none' });
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  page.on('console', msg => {
-    console.log('>>', msg.text());
-  });
-  await JMH.enable(page);
-  await page.goto(url);
-  await page.waitForTimeout(200);
-  midiin_a.noteOn(0, 'C5', 127);
-  midiin_b.noteOn(0, 'C6', 127);
-  await page.waitForTimeout(5000);
-  await browser.close();
+  for (const browserType of ['chromium', 'firefox', 'webkit']) {
+    console.log('Testing on', browserType);
+    const browser = await playwright[browserType].launch();
+    const context = await browser.newContext();
+    const page = await context.newPage();
+    page.on('console', msg => {
+      console.log('>>', msg.text());
+    });
+    await JMH.enable(page);
+    await page.goto(url);
+    await page.waitForTimeout(500);
+    midiin_a.noteOn(0, 'C5', 127);
+    await page.waitForTimeout(500);
+    midiin_b.noteOn(0, 'C6', 127);
+    await page.waitForTimeout(500);
+    await browser.close();
+  }
 })();

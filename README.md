@@ -86,3 +86,5 @@ JZZ({ engine: 'webmidi' });
 virtual_midi_in.emit([0x90, 0x61, 0x7f]);
 // ...
 ```
+
+Please check the [**test**](https://github.com/jazz-soft/jazz-midi-headless/tree/main/test) directory for more examples.
