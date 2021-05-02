@@ -58,26 +58,32 @@ module.exports = function(JZZ) {
         return;
       }
       if (request == 'openin') {
-        await JZZ().openMidiIn(req[0]).or(function() {
-          sendData([request, idx, ins[idx] ? ins[idx].name() : undefined]);
-        }).and(function() {
-          if (ins[idx]) ins[idx].close();
-          ins[idx] = this;
-          this.connect(function(msg) {
-            sendData(['midi', idx, 0].concat(msg.slice()));
+        try {
+          await JZZ().openMidiIn(req[0]).or(function() {
+            sendData([request, idx, ins[idx] ? ins[idx].name() : undefined]);
+          }).and(function() {
+            if (ins[idx]) ins[idx].close();
+            ins[idx] = this;
+            this.connect(function(msg) {
+              sendData(['midi', idx, 0].concat(msg.slice()));
+            });
+            sendData([request, idx, req[0]]);
           });
-          sendData([request, idx, req[0]]);
-        });
+        }
+        catch(e) {/**/}
         return;
       }
       if (request == 'openout') {
-        await JZZ().openMidiOut(req[0]).or(function() {
-          sendData([request, idx, outs[idx] ? outs[idx].name() : undefined]);
-        }).and(function() {
-          if (outs[idx]) outs[idx].close();
-          outs[idx] = this;
-          sendData([request, idx, req[0]]);
-        });
+        try {
+          await JZZ().openMidiOut(req[0]).or(function() {
+            sendData([request, idx, outs[idx] ? outs[idx].name() : undefined]);
+          }).and(function() {
+            if (outs[idx]) outs[idx].close();
+            outs[idx] = this;
+            sendData([request, idx, req[0]]);
+          });
+        }
+        catch(e) {/**/}
         return;
       }
       if (request == 'closein') {
