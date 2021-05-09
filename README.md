@@ -34,7 +34,7 @@ const playwright = require('playwright');
     const context = await browser.newContext();
     const page = await context.newPage();
     await JMH.enable(page);
-    await page.goto(url);
+    await page.goto('test.html');
     // ...
   }
 })();
