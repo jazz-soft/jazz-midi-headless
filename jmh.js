@@ -28,7 +28,6 @@ module.exports = function(JZZ) {
     async function jazz_midi_headless_request(req) {
       var i, data;
       var request = req[0];
-//console.log(req);
       if (request == 'refresh') {
         var info = await JZZ().refresh().info();
         data = ['refresh', { ins: [], outs: [] }];
@@ -214,13 +213,13 @@ module.exports = function(JZZ) {
     }
   }
   return {
-    enable: function(page, inject = true) {
+    enable: async function(page, inject = true) {
       if (page._virtualConsole && page._virtualConsole._events && page._virtualConsole._events.jsdomError) {
         if (page._runScripts == 'dangerously') enable_jsdom(page, inject);
         else console.log('Please run JSDOM with the { runScripts: "dangerously" } option!');
       }
       else if (typeof page.evaluateOnNewDocument == 'function' || typeof page.addInitScript == 'function') {
-        enable_puppeteer(page, inject);
+        await enable_puppeteer(page, inject);
       }
     }
   }
