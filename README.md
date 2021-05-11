@@ -5,7 +5,28 @@ MIDI for headless testing
 [![npm](https://img.shields.io/npm/v/jazz-midi-headless.svg)](https://www.npmjs.com/package/jazz-midi-headless)
 [![build](https://github.com/jazz-soft/jazz-midi-headless/actions/workflows/build.yml/badge.svg)](https://github.com/jazz-soft/jazz-midi-headless/actions)
 
-## Puppeteer
+## Usage
+
+`npm install jazz-midi-headless --save-dev`
+
+### JSDOM
+
+```js
+const JZZ = require('jzz');
+const JMH = require('jazz-midi-headless')(JZZ);
+const JSDOM = require('jsdom').JSDOM;
+
+(async () => {
+  const dom = await JSDOM.fromFile('test.html', {
+    resources: 'usable',
+    runScripts: 'dangerously',
+    beforeParse: window => { JMH.enable(window); }
+  });
+  // ...
+})();
+```
+
+### Puppeteer
 
 ```js
 const JZZ = require('jzz');
@@ -21,7 +42,7 @@ const puppeteer = require('puppeteer');
 })();
 ```
 
-## Playwright
+### Playwright
 
 ```js
 const JZZ = require('jzz');

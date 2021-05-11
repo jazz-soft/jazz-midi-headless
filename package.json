@@ -1,6 +1,6 @@
 {
   "name": "jazz-midi-headless",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "MIDI for headless testing",
   "main": "jmh.js",
   "scripts": {

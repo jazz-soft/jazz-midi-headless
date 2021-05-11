@@ -14,6 +14,7 @@ module.exports = function(JZZ) {
     var ins = [];
     var outs = [];
     var count = 0;
+    if (inject) window.eval(jzz_inject);
     const document = window.document;
     async function sendData(data) {
       try {
