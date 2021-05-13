@@ -23,7 +23,7 @@
     "jsdom": "^16.5.3",
     "jzz-gui-player": "^1.4.8",
     "jzz-midi-smf": "^1.5.0",
-    "playwright": "^1.10.0",
+    "playwright": "^1.11.0",
     "puppeteer": "^9.1.1",
     "web-midi-test": "^1.1.6"
   },

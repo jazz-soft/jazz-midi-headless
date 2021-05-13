@@ -27,7 +27,7 @@ function timeout(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 (async () => {
   await JZZ({ engine: 'webmidi' });
-  const dom = await JSDOM.fromFile(url, {
+  await JSDOM.fromFile(url, {
     resources: 'usable',
     runScripts: 'dangerously',
     beforeParse: window => { JMH.enable(window); }
@@ -36,5 +36,4 @@ function timeout(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
   midiin_a.emit([0x9a, 0xa, 0xa]);
   midiin_b.emit([0x9b, 0xb, 0xb]);
   midiin_c.emit([0x9c, 0xc, 0xc]);
-  await timeout(100);
 })();

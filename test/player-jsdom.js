@@ -4,7 +4,7 @@ const JSDOM = require('jsdom').JSDOM;
 const url = __dirname + '/player.html';
 
 (async () => {
-  const dom = await JSDOM.fromFile(url, {
+  await JSDOM.fromFile(url, {
     resources: 'usable',
     runScripts: 'dangerously',
     beforeParse: window => { JMH.enable(window); }
