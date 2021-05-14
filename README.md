@@ -67,7 +67,7 @@ Normally, **jazz-midi-headless** sees all regular MIDI ports available on your s
 via the **JZZ** and **jazz-midi**.  
 You can create virtual MIDI ports and (optionally) hide the regular ones.
 
-### Using JZZ virtual ports:
+### Using [JZZ](https://github.com/jazz-soft/JZZ) virtual ports:
 
 ```js
 const JZZ = require('jzz');
@@ -86,7 +86,7 @@ virtual_midi_in.noteOn(0, 'C#5', 127);
 // ...
 ```
 
-### Using web-midi-test virtual ports:
+### Using [web-midi-test](https://github.com/jazz-soft/web-midi-test) virtual ports:
 
 ```js
 const JZZ = require('jzz');
