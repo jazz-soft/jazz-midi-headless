@@ -1,11 +1,11 @@
 {
   "name": "jazz-midi-headless",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "MIDI for headless testing",
   "main": "jmh.js",
   "scripts": {
     "lint": "eslint . test",
-    "test": "node test/test-puppeteer"
+    "test": "node test/test-puppeteer && node test/test-jsdom"
   },
   "keywords": [
     "midi",
