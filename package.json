@@ -1,6 +1,6 @@
 {
   "name": "jazz-midi-headless",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "MIDI for headless testing",
   "main": "jmh.js",
   "scripts": {
@@ -16,16 +16,16 @@
   ],
   "author": "jazz-soft (https://jazz-soft.net/)",
   "dependencies": {
-    "jzz": "^1.5.6"
+    "jzz": "^1.6.0"
   },
   "devDependencies": {
-    "eslint": "^8.30.0",
-    "jsdom": "^20.0.3",
-    "jzz-gui-player": "^1.6.1",
-    "jzz-midi-smf": "^1.7.1",
-    "playwright": "^1.29.0",
-    "puppeteer": "^19.4.1",
-    "web-midi-test": "^1.2.2"
+    "eslint": "^8.35.0",
+    "jsdom": "^21.1.0",
+    "jzz-gui-player": "^1.6.2",
+    "jzz-midi-smf": "^1.7.2",
+    "playwright": "^1.31.1",
+    "puppeteer": "^19.7.2",
+    "web-midi-test": "^1.2.3"
   },
   "repository": {
     "type": "git",
