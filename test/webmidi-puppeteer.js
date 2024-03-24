@@ -15,6 +15,8 @@ JZZ.addMidiIn('VIRTUAL MIDI-In B', midiin_b);
 midiout_a.connect(function(msg) { console.log('VIRTUAL MIDI-Out A received: ' + msg); });
 midiout_b.connect(function(msg) { console.log('VIRTUAL MIDI-Out B received: ' + msg); });
 
+function sleep(ms) { return new Promise(res => setTimeout(res, ms)); }
+
 (async () => {
   await JZZ({ engine: 'none' });
   const browser = await puppeteer.launch();
@@ -24,10 +26,10 @@ midiout_b.connect(function(msg) { console.log('VIRTUAL MIDI-Out B received: ' + 
   });
   await JMH.enable(page);
   await page.goto(url);
-  await page.waitForTimeout(500);
+  await sleep(500);
   midiin_a.noteOn(0, 'C5', 127);
-  await page.waitForTimeout(500);
+  await sleep(500);
   midiin_b.noteOn(0, 'C6', 127);
-  await page.waitForTimeout(500);
+  await sleep(500);
   await browser.close();
 })();

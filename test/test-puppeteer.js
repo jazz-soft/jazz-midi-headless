@@ -23,6 +23,8 @@ const midiin_c = new WMT.MidiSrc('VIRTUAL MIDI-In C');
 midiin_c.connect();
 midiin_c.busy = true;
 
+function sleep(ms) { return new Promise(res => setTimeout(res, ms)); }
+
 (async () => {
   await JZZ({ engine: 'webmidi' });
   const browser = await puppeteer.launch();
@@ -32,10 +34,10 @@ midiin_c.busy = true;
   });
   await JMH.enable(page);
   await page.goto(url);
-  await page.waitForTimeout(1000);
+  await sleep(1000);
   midiin_a.emit([0x9a, 0xa, 0xa]);
   midiin_b.emit([0x9b, 0xb, 0xb]);
   midiin_c.emit([0x9c, 0xc, 0xc]);
-  await page.waitForTimeout(1000);
+  await sleep(1000);
   await browser.close();
 })();
