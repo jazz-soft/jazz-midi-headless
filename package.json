@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint . test",
     "test-playwright": "node test/test-playwright",
-    "test": "node test/test-puppeteer && node test/test-jsdom"
+    "test-puppeteer": "node test/test-playwright",
+    "test": "node test/test-jsdom"
   },
   "keywords": [
     "midi",
